@@ -11,7 +11,7 @@ def load_quests():
         return []
     with open(QUESTS_FILE, 'r') as file:
         quests = [line.strip().split('|') for line in file]
-    return [{'title': q[0], 'description': q[1], 'exp': int(q[2])} for q in quests]
+    return [{'title': q[0], 'description': q[1], 'exp': int(q[2]), 'level': q[2]} for q in quests]
 
 # Save quests to file
 def save_quests(quests):
