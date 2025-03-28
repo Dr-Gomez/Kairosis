@@ -36,30 +36,34 @@ def save_user_level(user_level):
 def display_ui(quests, user_level):
     os.system('clear')
     length = os.get_terminal_size().columns
-    print("\033[36m") # Cyan text
-    print("╭"+"=" * (length - 2)+"╮")
+    print("\033[36m" + "╭"+"=" * (length - 2)+"╮")
     print("┃"+"Kairosis".center(length - 2, ' ')+"┃")
-    print("╰"+"=" * (length - 2)+"╯")
-    print("\033[37m") # White Text
-    print("\nQUESTS:\n")
+    print("╰"+"=" * (length - 2)+"╯" + "\033[37m")
+    
+    exp_for_next_level = EXP_PER_LEVEL - user_level['exp']
+    
+    print("\033[31m" + "╭"+"=" * (length // 3 - 2)+ "╮" + "\033[35m"+ " " * (length // 3) + "\033[35m" + "╭" + "=" * (length // 3 - 2) + "╮")
+    print("\033[31m" + "┃"+"User Level: " + str(user_level['level']) + " " * (length // 3 - 2 - len(str(user_level['level'])) - 12) +"┃" + " " * (length // 3) + "\033[35m" + "┃" + " " * (length // 3 - 2 - 13) + "Welcome Back," + "┃")
+    print("\033[31m" + "┃"+"EXP to next level: "+ str(exp_for_next_level) + " " * (length //3 - 2 - len(str(exp_for_next_level)) - 19)  +"┃" + " " * (length // 3) + "\033[35m" + "┃"+ " " * (length // 3 - 2 - 7) + "Player." "┃")
+    print("\033[31m" + "╰"+"=" * (length // 3 - 2)+"╯" + "\033[35m"+ " " * (length // 3) + "\033[35m" + "╰" + "=" * (length // 3 - 2) + "╯")
+    print("\033[37m")
+
+    print("\n"+"QUESTS:".center(length, " ")+"\n")
+    print('-' * length)
 
     for i, quest in enumerate(quests):
-        #print(f"{i+1}. {quest['title']}".ljust(40) + f"EXP: {quest['exp']}")
-
         title = quest['title']
         description = quest['description']
         exp = quest['exp']
+        level = quest['level']
 
-
-        print(f"Name: {quest['title']}")
-        print(f"Description: {quest['description']}")
-        print(f"EXP: {quest['exp']}")
-        print(f"Level: {quest['level']}")
-        print('-' * 80)
+        print(f"Name: {title}")
+        print(f"Description: {description}")
+        print(f"EXP: {exp}")
+        print(f"Level: {level}")
+        print(f"ID: {i}")
+        print('-' * length)
     
-    print("\nUser Level: ", user_level['level'])
-    exp_for_next_level = EXP_PER_LEVEL - user_level['exp']
-    print(f"EXP to next level: {exp_for_next_level}")
     print("\nOptions: [C]reate Quest, [D]elete Quest, [M]ark Quest Done, [E]xit")
 
 # Main loop
