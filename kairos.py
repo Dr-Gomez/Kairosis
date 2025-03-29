@@ -67,14 +67,15 @@ def display_ui(quests, user_level):
     print('-' * length)
     
     for i, quest in enumerate(quests):
-        title, description, exp, level, days, start_time, end_time = quest.values()
-        print(f"Name: {title}")
-        print(f"Description: {description}")
-        print(f"EXP: {exp}")
-        print(f"Level: {level}")
-        print(f"Available: {', '.join(days)} from {start_time} to {end_time}")
-        print(f"ID: {i}")
-        print('-' * length)
+        if (is_quest_available(quest)):
+            title, description, exp, level, days, start_time, end_time = quest.values()
+            print(f"\033[32mName: {title} \033[37m")
+            print(f"\033[33mDescription: {description} \033[37m")
+            print(f"\033[34mEXP: {exp} \033[37m")
+            print(f"\033[35mLevel: {level} \033[37m")
+            print(f"\033[36mAvailable: {', '.join(days)} from {start_time} to {end_time} \033[37m")
+            print(f"ID: {i} \033[37m")
+            print('-' * length)
     
     print("\nOptions: [C]reate Quest, [D]elete Quest, [M]ark Quest Done, [E]xit")
 
@@ -92,8 +93,8 @@ def main():
         if choice == 'c':
             title = input("Enter quest title: ")
             description = input("Enter quest description: ")
-            exp = int(input("Enter quest EXP: "))
-            level = input("Enter quest level: ").upper()
+            level = input("Enter quest level (DEFCON): ").upper()
+            exp = int(input("Enter quest EXP (1- 100): "))
             days = input("Enter valid days (comma-separated, e.g., Monday,Tuesday): ").split(',')
             start_time = input("Enter start time (HH:MM format): ")
             end_time = input("Enter end time (HH:MM format): ")
@@ -115,11 +116,12 @@ def main():
                         user_level['level'] += 1
                         user_level['exp'] -= EXP_PER_LEVEL
                     save_user_level(user_level)
-                    del quests[quest_num]
-                    save_quests(quests)
-                else:
-                    print("This quest is not available at this time.")
+                    print("\033[32mQUEST COMPLETED!\033[37m")
                     input("Press Enter to continue...")
+                else:
+                    print("\033[31mThis quest is not available at this time.\033[37m")
+                    input("Press Enter to continue...")
+        
 
         elif choice == 'e':
             print("\033[0m")
